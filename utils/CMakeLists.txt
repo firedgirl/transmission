@@ -12,6 +12,13 @@ foreach(P create edit remote show)
             fmt::fmt-header-only
             libevent::event)
 
+    if (CMAKE_HOST_WIN32)
+        target_link_libraries(${TR_NAME}-${P}
+            PRIVATE
+                wldap32.lib
+                Normaliz.lib)
+    endif()
+
     tr_win32_app_info(${TR_NAME}-${P}
         "Transmission Utility ('${P}')"
         "${TR_NAME}-${P}"

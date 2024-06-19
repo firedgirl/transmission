@@ -37,6 +37,13 @@ target_link_libraries(${TR_NAME}-daemon
         fmt::fmt-header-only
         $<$<BOOL:${WITH_SYSTEMD}>:${SYSTEMD_LIBRARIES}>)
 
+if (CMAKE_HOST_WIN32)
+    target_link_libraries(${TR_NAME}-daemon
+        PRIVATE
+            wldap32.lib
+            Normaliz.lib)
+endif()
+
 tr_win32_app_info(${TR_NAME}-daemon
     "Transmission Daemon"
     "${TR_NAME}-daemon"

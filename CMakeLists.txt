@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 if(POLICY CMP0092)
     cmake_policy(SET CMP0092 NEW)
@@ -234,6 +234,12 @@ if(NOT TARGET CURL::libcurl)
     add_library(CURL::libcurl INTERFACE IMPORTED)
     target_link_libraries(CURL::libcurl INTERFACE ${CURL_LIBRARIES})
     target_include_directories(CURL::libcurl INTERFACE ${CURL_INCLUDE_DIRS})
+endif()
+
+if (CMAKE_HOST_WIN32)
+    add_definitions(-DCURL_STATICLIB)
+else()
+    add_definitions(/DCURL_STATICLIB)
 endif()
 
 if(ENABLE_DEPRECATED STREQUAL "AUTO")

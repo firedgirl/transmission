@@ -953,6 +953,8 @@ tr_torrent* tr_torrentFindFromId(tr_session* session, tr_torrent_id_t id);
 
 tr_torrent* tr_torrentFindFromMetainfo(tr_session* session, tr_torrent_metainfo const* metainfo);
 
+tr_torrent* tr_torrentFindFromHash(tr_session* session, tr_sha1_digest_t hash); 
+
 tr_torrent* tr_torrentFindFromMagnetLink(tr_session* session, char const* link);
 
 /**
