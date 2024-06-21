@@ -239,7 +239,7 @@ endif()
 if (CMAKE_HOST_WIN32)
     add_definitions(-DCURL_STATICLIB)
 else()
-    add_definitions(/DCURL_STATICLIB)
+    add_definitions(/DCURL_STATICLIB /DMT)
 endif()
 
 if(ENABLE_DEPRECATED STREQUAL "AUTO")
