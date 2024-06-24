@@ -218,6 +218,8 @@ if(WIN32)
             set(CMAKE_${L}_FLAGS "${CMAKE_${L}_FLAGS} -D__USE_MINGW_ANSI_STDIO=1")
         endif()
     endforeach()
+else()
+    add_definitions(-fPIC)
 endif()
 
 set(CMAKE_FOLDER "third-party")
