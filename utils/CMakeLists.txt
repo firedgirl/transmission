@@ -13,6 +13,11 @@ foreach(P create edit remote show)
             libevent::event)
 
     if (CMAKE_HOST_WIN32)
+        # add_link_options("/NODEFAULTLIB:msvcrt.lib")
+        target_link_options(${TR_NAME}-${P}
+            PRIVATE
+                "/NODEFAULTLIB:msvcrt.lib")
+
         target_link_libraries(${TR_NAME}-${P}
             PRIVATE
                 wldap32.lib

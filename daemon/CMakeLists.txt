@@ -38,6 +38,10 @@ target_link_libraries(${TR_NAME}-daemon
         $<$<BOOL:${WITH_SYSTEMD}>:${SYSTEMD_LIBRARIES}>)
 
 if (CMAKE_HOST_WIN32)
+    target_link_options(${TR_NAME}-daemon
+        PRIVATE
+            "/NODEFAULTLIB:msvcrt.lib")
+
     target_link_libraries(${TR_NAME}-daemon
         PRIVATE
             wldap32.lib

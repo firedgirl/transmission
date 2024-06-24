@@ -237,9 +237,9 @@ if(NOT TARGET CURL::libcurl)
 endif()
 
 if (CMAKE_HOST_WIN32)
-    add_definitions(-DCURL_STATICLIB)
+    add_definitions(/DCURL_STATICLIB /MT)
 else()
-    add_definitions(/DCURL_STATICLIB /DMT)
+    add_definitions(-DCURL_STATICLIB)
 endif()
 
 if(ENABLE_DEPRECATED STREQUAL "AUTO")
