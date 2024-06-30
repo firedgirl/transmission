@@ -22,6 +22,10 @@ foreach(P create edit remote show)
             PRIVATE
                 wldap32.lib
                 Normaliz.lib)
+    elseif(ANDROID)
+        target_link_libraries(${TR_NAME}-${P}
+            PRIVATE
+                z)
     endif()
 
     tr_win32_app_info(${TR_NAME}-${P}

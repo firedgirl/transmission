@@ -46,6 +46,15 @@ if (CMAKE_HOST_WIN32)
         PRIVATE
             wldap32.lib
             Normaliz.lib)
+elseif(ANDROID)
+    target_link_libraries(${TR_NAME}-daemon
+        PRIVATE
+        z
+        # importatnt, to avoid some crypto & ssl symbol lack
+        #   /usr/local/android/curl/armv8/lib/libcurl.a(libcurl_la-openssl.o): In function `cert_stuff':
+        #   openssl.c:(.text+0xd04): undefined reference to `OpenSSL_version_num'
+        ${CRYPTO_LIBRARIES})
+
 endif()
 
 tr_win32_app_info(${TR_NAME}-daemon

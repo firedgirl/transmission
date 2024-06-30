@@ -50,7 +50,7 @@ tr_auto_option(REBUILD_WEB "Rebuild the web client's generated assets. Requires 
 option(INSTALL_WEB "Install the web client's generated assets." ON)
 option(ENABLE_UTILS "Build utils (create, edit, show)" ON)
 option(ENABLE_CLI "Build command-line client" OFF)
-option(ENABLE_TESTS "Build unit tests" ON)
+option(ENABLE_TESTS "Build unit tests" OFF)
 option(ENABLE_UTP "Build µTP support" ON)
 option(ENABLE_WERROR "Treat warnings as errors" OFF)
 option(ENABLE_NLS "Enable native language support" ON)
@@ -462,6 +462,10 @@ if(QT_FOUND)
     target_link_libraries(transmission::qt_impl
         INTERFACE
             ${QT_TARGETS})
+endif()
+
+if(ANDROID)
+    add_link_options("-llog")
 endif()
 
 if(ENABLE_MAC)

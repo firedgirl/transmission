@@ -177,6 +177,7 @@ macro(tr_add_external_auto_library ID DIRNAME LIBNAME)
                 --no-warn-unused-cli
                 "-DCMAKE_TOOLCHAIN_FILE:PATH=${CMAKE_TOOLCHAIN_FILE}"
                 "-DCMAKE_USER_MAKE_RULES_OVERRIDE=${CMAKE_USER_MAKE_RULES_OVERRIDE}"
+                "-DANDROID_ABI=${ANDROID_ABI}"
                 "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
                 "-DCMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}"
                 "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"

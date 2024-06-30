@@ -26,6 +26,9 @@
 #else
 #include <sys/quota.h> /* quotactl() */
 #endif
+#if !defined(btodb) && defined(QIF_DQBLKSIZE_BITS)
+#define btodb(num) ((num) >> QIF_DQBLKSIZE_BITS)
+#endif
 #ifdef HAVE_GETMNTENT
 #ifdef __sun
 #include <fcntl.h>
@@ -317,6 +320,9 @@ extern "C"
     }
 
     close(fd);
+#elif defined(ANDROID)
+    // for api level 22, no quotactl, until api level 26
+    return disk_space; 
 #else
     if (quotactl(QCMD(Q_GETQUOTA, USRQUOTA), device, getuid(), reinterpret_cast<caddr_t>(&dq)) != 0)
     {
