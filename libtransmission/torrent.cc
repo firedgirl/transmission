@@ -2215,6 +2215,11 @@ void tr_torrent::onTrackerResponse(tr_tracker_event const* event)
     }
 }
 
+void tr_torrentSetLocalError(tr_torrent* tor, char const* msg)
+{
+    tor->setLocalError(msg);
+}
+
 bool tr_torrentSetTrackerList(tr_torrent* tor, char const* text)
 {
     return text != nullptr && tor->setTrackerList(text);

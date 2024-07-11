@@ -1092,6 +1092,8 @@ size_t tr_torrentGetMagnetLinkToBuf(tr_torrent const* tor, char* buf, size_t buf
 
 // ---
 
+void tr_torrentSetLocalError(tr_torrent* tor, char const* msg); 
+
 /**
  * Returns a string listing its tracker's announce URLs.
  * One URL per line, with a blank line between tiers.
