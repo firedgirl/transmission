@@ -43,11 +43,11 @@ set(PSL_MINIMUM 0.21.1)
 set(QT_MINIMUM 5.6)
 
 option(ENABLE_DAEMON "Build daemon" ON)
-tr_auto_option(ENABLE_GTK "Build GTK client" AUTO)
-tr_auto_option(ENABLE_QT "Build Qt client" AUTO)
-tr_auto_option(ENABLE_MAC "Build Mac client" AUTO)
+tr_auto_option(ENABLE_GTK "Build GTK client" OFF)
+tr_auto_option(ENABLE_QT "Build Qt client" OFF)
+tr_auto_option(ENABLE_MAC "Build Mac client" OFF)
 tr_auto_option(REBUILD_WEB "Rebuild the web client's generated assets. Requires Node.js and network access." OFF)
-option(INSTALL_WEB "Install the web client's generated assets." ON)
+option(INSTALL_WEB "Install the web client's generated assets." OFF)
 option(ENABLE_UTILS "Build utils (create, edit, show)" ON)
 option(ENABLE_CLI "Build command-line client" OFF)
 option(ENABLE_TESTS "Build unit tests" OFF)
@@ -297,6 +297,12 @@ if(WITH_CRYPTO STREQUAL "AUTO" OR WITH_CRYPTO STREQUAL "mbedtls")
     endif()
 endif()
 
+message(STATUS "cryptor pkg: ${CRYPTO_PKG}")
+message(STATUS "cryptor include dir: ${OPENSSL_INCLUDE_DIR}")
+message(STATUS "cryptor lib dir: ${OPENSSL_LIBRARIES}")
+message(STATUS "cryptor include dir: ${CRYPTO_INCLUDE_DIR}")
+message(STATUS "cryptor lib dir: ${CRYPTO_LIBRARIES}")
+
 # We should have found the library by now
 if(CRYPTO_PKG STREQUAL "")
     if(WITH_CRYPTO STREQUAL "AUTO")
@@ -311,9 +317,20 @@ else()
         INTERFACE
             ${CRYPTO_INCLUDE_DIRS})
 
-    target_link_libraries(transmission::crypto_impl
-        INTERFACE
-            ${CRYPTO_LIBRARIES})
+    if(APPLE)
+        # importatnt, to avoid some crypto & ssl symbol lack
+        #Undefined symbols for architecture arm64:
+        #   "_ASN1_STRING_get0_data", referenced from:
+        #       _ossl_verifyhost in libcurl.a(libcurl_la-openssl.o)
+        target_link_libraries(transmission::crypto_impl
+            INTERFACE
+                ${CRYPTO_LIBRARIES}/libcrypto.a
+                ${CRYPTO_LIBRARIES}/libssl.a)
+    else()
+        target_link_libraries(transmission::crypto_impl
+            INTERFACE
+                ${CRYPTO_LIBRARIES})
+    endif()
 endif()
 
 if(ENABLE_GTK)
@@ -747,7 +764,7 @@ if(HAVE_LIBM)
 endif()
 
 check_library_exists(quota quotacursor_skipidtype "" HAVE_LIBQUOTA)
-if(HAVE_LIBQUOTA)
+if(HAVE_LIBQUOTA AND NOT APPLE)
     set(LIBQUOTA_LIBRARY quota)
 endif()
 

@@ -1,7 +1,7 @@
 include(CheckLibraryExists)
 include(CheckSymbolExists)
 
-if(ENABLE_NLS)
+if(ENABLE_NLS AND NOT APPLE)
     check_library_exists(intl libintl_gettext "" HAVE_LIBINTL)
     if(HAVE_LIBINTL)
         set(LIBINTL_LIBRARY intl)

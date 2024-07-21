@@ -167,27 +167,74 @@ macro(tr_add_external_auto_library ID DIRNAME LIBNAME)
                 "-DCMAKE_OSX_SYSROOT:PATH=${CMAKE_OSX_SYSROOT}")
         endif()
 
-        ExternalProject_Add(
-            ${${ID}_UPSTREAM_TARGET}
-            PREFIX "${CMAKE_BINARY_DIR}/third-party/${DIRNAME}.bld"
-            SOURCE_DIR "${CMAKE_SOURCE_DIR}/third-party/${DIRNAME}"
-            INSTALL_DIR "${${ID}_PREFIX}"
-            CMAKE_ARGS
-                -Wno-dev # We don't want to be warned over unused variables
-                --no-warn-unused-cli
-                "-DCMAKE_TOOLCHAIN_FILE:PATH=${CMAKE_TOOLCHAIN_FILE}"
-                "-DCMAKE_USER_MAKE_RULES_OVERRIDE=${CMAKE_USER_MAKE_RULES_OVERRIDE}"
-                "-DANDROID_ABI=${ANDROID_ABI}"
-                "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
-                "-DCMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}"
-                "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
-                "-DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}"
-                "-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}"
-                "-DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>"
-                "-DCMAKE_INSTALL_LIBDIR:STRING=lib"
-                ${${ID}_EXT_PROJ_CMAKE_ARGS}
-                ${_TAEAL_ARG_CMAKE_ARGS}
-            BUILD_BYPRODUCTS "${${ID}_LIBRARY}")
+        if(ANDROID_ABI)
+            # for android
+            ExternalProject_Add(
+                ${${ID}_UPSTREAM_TARGET}
+                PREFIX "${CMAKE_BINARY_DIR}/third-party/${DIRNAME}.bld"
+                SOURCE_DIR "${CMAKE_SOURCE_DIR}/third-party/${DIRNAME}"
+                INSTALL_DIR "${${ID}_PREFIX}"
+                    CMAKE_ARGS
+                        -Wno-dev # We don't want to be warned over unused variables
+                        --no-warn-unused-cli
+                        "-DCMAKE_TOOLCHAIN_FILE:PATH=${CMAKE_TOOLCHAIN_FILE}"
+                        "-DCMAKE_USER_MAKE_RULES_OVERRIDE=${CMAKE_USER_MAKE_RULES_OVERRIDE}"
+                        "-DANDROID_ABI=${ANDROID_ABI}"
+                        "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
+                        "-DCMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}"
+                        "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
+                        "-DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}"
+                        "-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}"
+                        "-DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>"
+                        "-DCMAKE_INSTALL_LIBDIR:STRING=lib"
+                        ${${ID}_EXT_PROJ_CMAKE_ARGS}
+                        ${_TAEAL_ARG_CMAKE_ARGS}
+                BUILD_BYPRODUCTS "${${ID}_LIBRARY}")
+        elseif(PLATFORM)
+            # for iOS
+            ExternalProject_Add(
+                ${${ID}_UPSTREAM_TARGET}
+                PREFIX "${CMAKE_BINARY_DIR}/third-party/${DIRNAME}.bld"
+                SOURCE_DIR "${CMAKE_SOURCE_DIR}/third-party/${DIRNAME}"
+                INSTALL_DIR "${${ID}_PREFIX}"
+                    CMAKE_ARGS
+                        -Wno-dev # We don't want to be warned over unused variables
+                        --no-warn-unused-cli
+                        "-DCMAKE_TOOLCHAIN_FILE:PATH=${CMAKE_TOOLCHAIN_FILE}"
+                        "-DCMAKE_USER_MAKE_RULES_OVERRIDE=${CMAKE_USER_MAKE_RULES_OVERRIDE}"
+                        "-DPLATFORM=${PLATFORM}"
+                        "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
+                        "-DCMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}"
+                        "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
+                        "-DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}"
+                        "-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}"
+                        "-DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>"
+                        "-DCMAKE_INSTALL_LIBDIR:STRING=lib"
+                        ${${ID}_EXT_PROJ_CMAKE_ARGS}
+                        ${_TAEAL_ARG_CMAKE_ARGS}
+                BUILD_BYPRODUCTS "${${ID}_LIBRARY}")
+        else ()
+            ExternalProject_Add(
+                ${${ID}_UPSTREAM_TARGET}
+                PREFIX "${CMAKE_BINARY_DIR}/third-party/${DIRNAME}.bld"
+                SOURCE_DIR "${CMAKE_SOURCE_DIR}/third-party/${DIRNAME}"
+                INSTALL_DIR "${${ID}_PREFIX}"
+                    CMAKE_ARGS
+                        -Wno-dev # We don't want to be warned over unused variables
+                        --no-warn-unused-cli
+                        "-DCMAKE_TOOLCHAIN_FILE:PATH=${CMAKE_TOOLCHAIN_FILE}"
+                        "-DCMAKE_USER_MAKE_RULES_OVERRIDE=${CMAKE_USER_MAKE_RULES_OVERRIDE}"
+                        "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
+                        "-DCMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}"
+                        "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
+                        "-DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}"
+                        "-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}"
+                        "-DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>"
+                        "-DCMAKE_INSTALL_LIBDIR:STRING=lib"
+                        ${${ID}_EXT_PROJ_CMAKE_ARGS}
+                        ${_TAEAL_ARG_CMAKE_ARGS}
+                BUILD_BYPRODUCTS "${${ID}_LIBRARY}")
+        endif()
 
         set_property(TARGET ${${ID}_UPSTREAM_TARGET} PROPERTY FOLDER "third-party")
 

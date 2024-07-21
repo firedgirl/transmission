@@ -29,7 +29,7 @@
 #if !defined(btodb) && defined(QIF_DQBLKSIZE_BITS)
 #define btodb(num) ((num) >> QIF_DQBLKSIZE_BITS)
 #endif
-#ifdef HAVE_GETMNTENT
+#if defined(HAVE_GETMNTENT) && !defined(__APPLE__)
 #ifdef __sun
 #include <fcntl.h>
 #include <stdio.h>
@@ -76,7 +76,7 @@ namespace
 
 [[nodiscard]] char const* getdev(std::string_view path)
 {
-#ifdef HAVE_GETMNTENT
+#if defined(HAVE_GETMNTENT) && !defined(__APPLE__)
 
 #ifdef __sun
 
@@ -144,7 +144,7 @@ namespace
 
 [[nodiscard]] char const* getfstype(std::string_view device)
 {
-#ifdef HAVE_GETMNTENT
+#if defined(HAVE_GETMNTENT) && !defined(__APPLE__)
 
 #ifdef __sun
 

@@ -119,7 +119,7 @@ void set_file_for_single_pass(tr_sys_file_t handle)
         return;
     }
 
-#ifdef HAVE_POSIX_FADVISE
+#if defined(HAVE_POSIX_FADVISE) && !defined(__APPLE__)
 
     (void)posix_fadvise(handle, 0, 0, POSIX_FADV_SEQUENTIAL);
 
@@ -842,7 +842,7 @@ bool tr_sys_file_advise(
 
     bool ret = true;
 
-#if defined(HAVE_POSIX_FADVISE)
+#if defined(HAVE_POSIX_FADVISE) && !defined(__APPLE__)
 
     int const native_advice = advice == TR_SYS_FILE_ADVICE_WILL_NEED ?
         POSIX_FADV_WILLNEED :
@@ -880,7 +880,7 @@ bool tr_sys_file_advise(
 namespace
 {
 
-#ifdef HAVE_FALLOCATE64
+#if defined(HAVE_FALLOCATE64) && !defined(__APPLE__)
 bool preallocate_fallocate64(tr_sys_file_t handle, uint64_t size)
 {
     return fallocate64(handle, 0, 0, size) == 0;
@@ -934,7 +934,7 @@ bool full_preallocate_apple(tr_sys_file_t handle, uint64_t size)
 }
 #endif
 
-#ifdef HAVE_POSIX_FALLOCATE
+#if defined(HAVE_POSIX_FALLOCATE) && !defined(__APPLE__)
 bool full_preallocate_posix(tr_sys_file_t handle, uint64_t size)
 {
     return posix_fallocate(handle, 0, size) == 0;
@@ -951,7 +951,7 @@ bool tr_sys_file_preallocate(tr_sys_file_t handle, uint64_t size, int flags, tr_
 
     // these approaches are fast and should be tried first
     auto approaches = std::vector<prealloc_func>{
-#ifdef HAVE_FALLOCATE64
+#if defined(HAVE_FALLOCATE64) && !defined(__APPLE__)
         preallocate_fallocate64
 #endif
     };
@@ -973,7 +973,7 @@ bool tr_sys_file_preallocate(tr_sys_file_t handle, uint64_t size, int flags, tr_
 #ifdef __APPLE__
                 full_preallocate_apple,
 #endif
-#ifdef HAVE_POSIX_FALLOCATE
+#if defined(HAVE_POSIX_FALLOCATE) && !defined(__APPLE__)
                 full_preallocate_posix,
 #endif
             });

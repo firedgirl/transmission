@@ -39,7 +39,7 @@ struct tr_error;
 #endif
 #endif
 
-#if defined(HAVE_NGETTEXT)
+#if defined(HAVE_NGETTEXT) && !defined(__APPLE__)
 #define tr_ngettext ngettext
 #else
 #define tr_ngettext(singular, plural, count) ((count) == 1 ? (singular) : (plural))
