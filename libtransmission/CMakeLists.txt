@@ -184,7 +184,6 @@ target_sources(${TR_NAME}
     PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}/version.h)
 
-message(STATUS "utils.mm: APPLE=${APPLE}, CMAKE_CXX_COMPILER_ID=${CMAKE_CXX_COMPILER_ID}")
 tr_allow_compile_if(
     [=[[TRUE]]=]
         crypto-utils-fallback.cc
