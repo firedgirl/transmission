@@ -184,6 +184,7 @@ target_sources(${TR_NAME}
     PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}/version.h)
 
+message(STATUS "utils.mm: APPLE=${APPLE}, CMAKE_CXX_COMPILER_ID=${CMAKE_CXX_COMPILER_ID}")
 tr_allow_compile_if(
     [=[[TRUE]]=]
         crypto-utils-fallback.cc
@@ -201,7 +202,8 @@ tr_allow_compile_if(
         watchdir-inotify.cc
     [=[[WITH_KQUEUE]]=]
         watchdir-kqueue.cc
-    [=[[APPLE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang"]]=]
+    # for iOS x86_64, need symbols in utils.mm
+    [=[[APPLE]]=] # AND CMAKE_CXX_COMPILER_ID MATCHES "Clang"]]=]
         tr-assert.mm
         utils.mm
     [=[[NOT (APPLE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")]]=]
