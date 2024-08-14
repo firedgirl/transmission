@@ -58,6 +58,7 @@
 		558699602570759F00F77A43 /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55869925257074EC00F77A43 /* libcurl.tbd */; };
 		5586996C2570759F00F77A43 /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55869925257074EC00F77A43 /* libcurl.tbd */; };
 		62F644738FE3D8788EBF73A9 /* block-info.cc in Sources */ = {isa = PBXBuildFile; fileRef = A54D44C6A7AAF131D9AE29F5 /* block-info.cc */; };
+		636277372C6C8511000980AD /* evthread_pthread.c in Sources */ = {isa = PBXBuildFile; fileRef = 636277362C6C8510000980AD /* evthread_pthread.c */; };
 		66F977825E65AD498C028BB0 /* announce-list.cc in Sources */ = {isa = PBXBuildFile; fileRef = 66F977825E65AD498C028BB1 /* announce-list.cc */; };
 		66F977825E65AD498C028BB2 /* announce-list.h in Headers */ = {isa = PBXBuildFile; fileRef = 66F977825E65AD498C028BB3 /* announce-list.h */; };
 		888A256631B3DE536FEB8B00 /* tr-strbuf.h in Headers */ = {isa = PBXBuildFile; fileRef = 888A256631B3DE536FEB8B01 /* tr-strbuf.h */; };
@@ -783,6 +784,7 @@
 		4DFBC2DD09C0970D00D5C571 /* Torrent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Torrent.h; sourceTree = "<group>"; };
 		4DFBC2DE09C0970D00D5C571 /* Torrent.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Torrent.mm; sourceTree = "<group>"; };
 		55869925257074EC00F77A43 /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
+		636277362C6C8510000980AD /* evthread_pthread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = evthread_pthread.c; sourceTree = "<group>"; };
 		66F977825E65AD498C028BB1 /* announce-list.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "announce-list.cc"; sourceTree = "<group>"; };
 		66F977825E65AD498C028BB3 /* announce-list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "announce-list.h"; sourceTree = "<group>"; };
 		6A044CBD8C049AFCBD4DB411 /* block-info.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "block-info.h"; sourceTree = "<group>"; };
@@ -2007,6 +2009,7 @@
 		BE75C3570C72A0D600DBEFE0 /* libevent */ = {
 			isa = PBXGroup;
 			children = (
+				636277362C6C8510000980AD /* evthread_pthread.c */,
 				A2074F4B12BEA8CE00F70985 /* buffer.c */,
 				A2074F5012BEA8E000F70985 /* bufferevent_filter.c */,
 				A2074F5212BEA8E000F70985 /* bufferevent_pair.c */,
@@ -3255,6 +3258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				636277372C6C8511000980AD /* evthread_pthread.c in Sources */,
 				A2074F4C12BEA8CE00F70985 /* buffer.c in Sources */,
 				A2074F5912BEA8E000F70985 /* bufferevent_filter.c in Sources */,
 				A2074F5B12BEA8E000F70985 /* bufferevent_pair.c in Sources */,
